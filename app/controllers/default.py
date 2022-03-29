@@ -1,5 +1,7 @@
 from app import app
-from flask import Flask, render_template
+from flask import render_template
+
+from app.models.users import MyForm
 
 @app.route('/')
 def hello():
@@ -8,7 +10,9 @@ def hello():
 
 @app.route('/form/')
 def formulario():
-    return render_template('form_page.html')
+    form = MyForm()
+    return render_template('form_page.html',
+                            form=form)
 
 
 @app.route('/hello')
