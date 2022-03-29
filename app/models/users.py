@@ -1,4 +1,3 @@
-import email
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, BooleanField, PasswordField
