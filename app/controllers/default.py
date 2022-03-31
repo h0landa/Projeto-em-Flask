@@ -1,8 +1,8 @@
 from email.policy import default
 from app import app
 from flask import render_template
-
 from app.models.users import MyForm
+
 
 @app.route('/')
 def hello():
@@ -14,7 +14,7 @@ def formulario():
     form = MyForm()
     return render_template('form_page.html',
                             form=form)
-
+    
 
 @app.route('/hello', defaults={'name':None})
 @app.route('/hello/<name>')

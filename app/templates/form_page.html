@@ -1,3 +1,4 @@
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,25 +8,26 @@
     <title>Formulário</title>
 </head>
 <body>
-    <form>
+    <form action="" method="POST">
         <h1>Formulário de cadastro</h1>
         <div>
             <label for="nome">Nome:</label>
-            <input type="text" id="nome">
+            {{form.username(id='nome')}}
         </div>
         <div>
             <label for="email">Email:</label>
-            <input type="text" id="email">
+            {{form.email(id='email')}}
         </div>
         <div>
             <label for="senha">Senha:</label>
-            <input type="password" id="senha">
+            {{form.password(id='senha')}}
         </div>
         <div>
             <label for="idade">Idade:</label>
-            <input type="date" id="idade">
+            {{form.date(id='idade')}}
         </div>
         <button type="submit">Enviar</button>
     </form>
 </body>
 </html>
+{% endblock %}
