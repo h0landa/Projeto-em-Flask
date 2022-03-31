@@ -19,3 +19,4 @@ class User(db.Model):
         self.date = date
     def __repr__(self):
         return "<User %r" % self.username
+        

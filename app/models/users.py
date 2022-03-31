@@ -9,5 +9,3 @@ class MyForm(FlaskForm):
     date = DateField('Data de Nascimento', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Senha', validators=[DataRequired()])
-
-    
