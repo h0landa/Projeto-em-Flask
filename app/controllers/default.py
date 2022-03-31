@@ -1,3 +1,4 @@
+from crypt import methods
 from email.policy import default
 from app import app
 from flask import render_template
@@ -12,8 +13,12 @@ def hello():
 @app.route('/form/')
 def formulario():
     form = MyForm()
-    return render_template('form_page.html',
-                            form=form)
+    if form.validate_on_submit():
+        print(f'Nome de usuário: {form.username}')
+        print(f'Email de usuário: {form.email}')
+    return render_template('form_page.html', methods = 'POST, GET', 
+                        form=form)
+    
     
 
 @app.route('/hello', defaults={'name':None})
