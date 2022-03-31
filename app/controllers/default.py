@@ -1,3 +1,4 @@
+from email.policy import default
 from app import app
 from flask import render_template
 
@@ -15,8 +16,11 @@ def formulario():
                             form=form)
 
 
-@app.route('/hello')
-def hello_word():
-    return f'Hello word!'
-
+@app.route('/hello', defaults={'name':None})
+@app.route('/hello/<name>')
+def hello_word(name):
+    if name:
+        return f'Olá, %s!' % name
+    else:
+        return f'Olá,usuário!'
 
