@@ -1,5 +1,6 @@
+import email
 from app import app
-from flask import render_template
+from flask import render_template, request
 from app.models.users import MyForm
 from flask_mysqldb import MySQL
 from app import mysql
@@ -11,13 +12,21 @@ def hello():
     return 'Index page'
 
 
-@app.route('/form/')
+@app.route('/form/', methods = ['POST', 'GET'])
 def formulario():
     form = MyForm()
     if form.validate_on_submit():
         print(f'Nome de usuário: {form.username}')
         print(f'Email de usuário: {form.email}')
-    return render_template('form_page.html', methods = 'POST, GET', 
+    if request.method == 'POST':
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        user = form.username
+        password = form.password
+        email = form.email
+        date = form.date
+        #cur.execute(f'INSERT INTO login(username, password, email, date) VALUES(\'{user}\', \'{password}\', \'{email}\', \'{date}\')')
+        print('Data:', date)
+    return render_template('form_page.html', 
                         form=form)
     
     
