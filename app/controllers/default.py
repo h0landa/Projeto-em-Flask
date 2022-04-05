@@ -1,8 +1,9 @@
-from crypt import methods
-from email.policy import default
 from app import app
 from flask import render_template
 from app.models.users import MyForm
+from flask_mysqldb import MySQL
+from app import mysql
+import MySQLdb.cursors
 
 
 @app.route('/')
@@ -28,4 +29,12 @@ def hello_word(name):
         return f'Olá, %s!' % name
     else:
         return f'Olá,usuário!'
+
+
+@app.route('/usuarios')
+def users():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute('SELECT * FROM login;')
+    result = cur.fetchall()
+    return str(result)
 
