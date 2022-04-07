@@ -1,4 +1,3 @@
-import email
 from app import app
 from flask import render_template, request
 from app.models.users import MyForm
@@ -15,19 +14,16 @@ def hello():
 @app.route('/form/', methods = ['POST', 'GET'])
 def formulario():
     form = MyForm()
-    if form.validate_on_submit():
-        print(f'Nome de usuário: {form.username}')
-        print(f'Email de usuário: {form.email}')
     if request.method == 'POST':
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        user = form.username
-        password = form.password
-        email = form.email
-        date = form.date
-        #cur.execute(f'INSERT INTO login(username, password, email, date) VALUES(\'{user}\', \'{password}\', \'{email}\', \'{date}\')')
-        print('Data:', date)
+        user = form.username.data
+        password = form.password.data
+        email = form.email.data
+        date = form.date.data
+        cur.execute(f"INSERT INTO login(username, password, email, date) VALUES('{user}', '{password}', '{email}', '{date}');")
+        mysql.connection.commit()
     return render_template('form_page.html', 
-                        form=form)
+                            form=form)
     
     
 
