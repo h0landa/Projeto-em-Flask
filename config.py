@@ -1,6 +1,3 @@
-from app import file_path
-
-
 DEBUG = True
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = '20181174010034'
