@@ -20,9 +20,14 @@ def formulario():
         password = form.password.data
         email = form.email.data
         date = form.date.data
-        cur.execute(
-            f"INSERT INTO login(username, password, email, date) VALUES('{user}', '{password}', '{email}', '{date}');")
-        mysql.connection.commit()
+        cur.execute(f"SELEC * FROM login WHERE username = {user}")
+        login = cur.fetchone()
+        if login:
+            mensagem = 'Esse usuário já existe, tente novamente'
+        else:
+            cur.execute(
+                f"INSERT INTO login(username, password, email, date) VALUES('{user}', '{password}', '{email}', '{date}');")
+            mysql.connection.commit()
     return render_template('form_page.html',
                            form=form)
 
