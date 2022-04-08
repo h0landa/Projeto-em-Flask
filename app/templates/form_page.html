@@ -15,19 +15,19 @@
         <h1>Formulário de cadastro</h1>
         <div class="mb-3">
             <label for="nome" class="form-group">Nome:</label>
-            {{form.username(id='nome', class="form-control", placeholder="Digite seu nome")}}
+            {{Registerform.username(id='nome', class="form-control", placeholder="Digite seu nome")}}
         </div>
         <div>
             <label for="email" class="form-label">Email:</label>
-            {{form.email(id='email', class="form-control", placeholder="Digite seu email")}}
+            {{Registerform.email(id='email', class="form-control", placeholder="Digite seu email")}}
         </div>
         <div>
             <label for="senha" class="form-label">Senha:</label>
-            {{form.password(id='senha', class="form-control", placeholder="Senha Com 8 Caracteres")}}
+            {{Registerform.password(id='senha', class="form-control", placeholder="Senha Com 8 Caracteres")}}
         </div>
         <div>
             <label for="idade" class="form-label">Idade:</label>
-            {{form.date(id='idade', class="form-control")}}
+            {{Registerform.date(id='idade', class="form-control")}}
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
         {% if mensagem == 'Esse usuário já existe, tente novamente' %}
