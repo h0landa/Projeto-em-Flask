@@ -30,8 +30,18 @@
             {{form.date(id='idade', class="form-control")}}
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
+        {% if login %}
+        <div class="alert alert-danger" role="alert">
+            {{mensagem}}
+        </div>
+        {% endif %}
+        {% if not login %}
+        <div class="alert alert-success" role="alert">
+            {{mensagem}}
+        </div>
+        {% endif %}
+        </div>
     </form>
-    </div>
 </body>
 </html>
 {% endblock %}
