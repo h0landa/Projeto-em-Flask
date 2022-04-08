@@ -1,27 +1,28 @@
 from app import app
 from flask import render_template, request
-from app.models.users import MyForm
+from app.models.users import LoginForm, RegisterForm
 from flask_mysqldb import MySQL
 from app import mysql
 import MySQLdb.cursors
 
-
 @app.route('/')
+@app.route('/login')
 def hello():
-    return 'Index page'
+    Loginform = LoginForm()
+    return render_template('login_page.html')
 
 
 @app.route('/form/', methods=['POST', 'GET'])
 def formulario():
-    form = MyForm()
+    Registerform = RegisterForm()
     mensagem = ''
     login = ''    
     if request.method == 'POST':
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        user = form.username.data
-        password = form.password.data
-        email = form.email.data
-        date = form.date.data
+        user = Registerform.username.data
+        password = Registerform.password.data
+        email = Registerform.email.data
+        date = Registerform.date.data
         cur.execute(f"SELECT * FROM login WHERE username = '{user}';")
         login = cur.fetchall()
         if login:
@@ -32,7 +33,7 @@ def formulario():
             mysql.connection.commit()
             mensagem = 'Usuário cadastrado com sucesso'
     return render_template('form_page.html',
-                           form=form, mensagem = mensagem)
+                           Registerform = Registerform, mensagem = mensagem)
 
 
 @app.route('/hello', defaults={'name': None})
