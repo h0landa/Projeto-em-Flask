@@ -30,12 +30,11 @@
             {{form.date(id='idade', class="form-control")}}
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
-        {% if login %}
+        {% if mensagem == 'Esse usuário já existe, tente novamente' %}
         <div class="alert alert-danger" role="alert">
             {{mensagem}}
         </div>
-        {% endif %}
-        {% if not login %}
+        {% elif mensagem == 'Usuário cadastrado com sucesso' %}
         <div class="alert alert-success" role="alert">
             {{mensagem}}
         </div>

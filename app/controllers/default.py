@@ -32,7 +32,7 @@ def formulario():
             mysql.connection.commit()
             mensagem = 'Usuário cadastrado com sucesso'
     return render_template('form_page.html',
-                           form=form, mensagem = mensagem, login = login)
+                           form=form, mensagem = mensagem)
 
 
 @app.route('/hello', defaults={'name': None})
