@@ -2,9 +2,6 @@ import email
 from app import app
 from flask import render_template, request
 from app.models.users import LoginForm, RegisterForm
-from flask_mysqldb import MySQL
-from app import mysql
-import MySQLdb.cursors
 
 
 

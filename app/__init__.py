@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 import os
-from flask_mysqldb import MySQL
 
 
 file_path = os.path.abspath(os.getcwd())+"\dados.db"
