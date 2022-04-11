@@ -1,8 +1,7 @@
-import email
 from app import app
 from flask import render_template, request
 from app.models.users import LoginForm, RegisterForm
-
+from app.models.tables import User, db
 
 
 @app.route('/')
@@ -12,12 +11,8 @@ def hello():
     msg = ''
     login = ''
     if Loginform.validate_on_submit():
-        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        email = Loginform.email.data
-        password = Loginform.password.data
-        cur.execute(f"SELECT * FROM login WHERE email='{email}' and password = '{password}';")
-        login = cur.fetchall()
-        if login:
+        login = User.query.filter_by(username=Loginform.username.data).first()
+        if login and login.password == Loginform.data.password:
             return render_template('main_page.html')
         else:
             msg = 'Usuário/Senha Incorretos. Tente novamente'
@@ -30,19 +25,13 @@ def formulario():
     mensagem = ''
     login = ''    
     if request.method == 'POST':
-        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        user = Registerform.username.data
-        password = Registerform.password.data
-        email = Registerform.email.data
-        date = Registerform.date.data
-        cur.execute(f"SELECT * FROM login WHERE username = '{user}';")
-        login = cur.fetchall()
+        login = User.query.filter_by(username=Registerform.username.data).first()
         if login:
             mensagem = 'Esse usuário já existe, tente novamente'
         else:
-            cur.execute(
-                f"INSERT INTO login(username, password, email, date) VALUES('{user}', '{password}', '{email}', '{date}');")
-            mysql.connection.commit()
+            new_user = User(f'{Registerform.username.data}', f'{Registerform.password.data}', f'{Registerform.email.data}', f'{Registerform.date.data}')        
+            db.session.add(new_user)
+            db.session.commit()
             mensagem = 'Usuário cadastrado com sucesso'
     return render_template('form_page.html',
                            Registerform = Registerform, mensagem = mensagem)

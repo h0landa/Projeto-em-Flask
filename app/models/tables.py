@@ -1,20 +1,19 @@
 from enum import unique
-from typing_extensions import Self
+from sqlalchemy import true
 from app import db
 
 class User(db.Model):
-    __tablename__ = "usuarios"
+    __tablename__ = "login"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
-    email = db.Column(db.String, unique=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    username = db.Column(db.String(45), unique=True)
+    password = db.Column(db.String(45))
+    email = db.Column(db.String(120), unique=True)
     date = db.Column(db.DateTime)
 
-    def __init__(self, username, password, email, date, id):
+    def __init__(self, username, password, email, date):
         self.username = username
         self.password = password
-        self.id = id
         self.email = email
         self.date = date
     def __repr__(self):
