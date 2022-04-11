@@ -12,7 +12,6 @@ migrate = Migrate(app, db)
 app.config.from_object('config')
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
-mysql = MySQL(app)
 
 
 from app.controllers import default 

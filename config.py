@@ -1,0 +1,4 @@
+DEBUG = True
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SECRET_KEY = "senha-segura"
+SQLALCHEMY_DATABASE_URI = 'mysql://root:20181174010034@localhost/users'
