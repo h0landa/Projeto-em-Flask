@@ -1,19 +1,24 @@
 from app import app
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 from app.models.users import LoginForm, RegisterForm
 from app.models.tables import User, db
 
 
+@app.route("/index")
+def index():
+    return render_template('main_page.html')
+
+    
 @app.route('/')
 @app.route('/login', methods=['POST', 'GET'])
 def hello():
     Loginform = LoginForm()
     msg = ''
     login = ''
-    if Loginform.validate_on_submit():
+    if request.method == 'GET':
         login = User.query.filter_by(username=Loginform.username.data).first()
         if login and login.password == Loginform.data.password:
-            return render_template('main_page.html')
+            return redirect(url_for("index"))
         else:
             msg = 'Usuário/Senha Incorretos. Tente novamente'
     return render_template('login_page.html', Loginform = Loginform, msg = msg)
@@ -46,9 +51,9 @@ def hello_word(name):
         return f'Olá,usuário!'
 
 
-@app.route('/usuarios')
+'''@app.route('/usuarios')
 def users():
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute('SELECT * FROM login;')
     result = cur.fetchall()
-    return str(result)
+    return str(result)'''
