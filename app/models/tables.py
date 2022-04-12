@@ -1,6 +1,7 @@
 from enum import unique
 from sqlalchemy import true
 from app import db
+from app import lm
 
 class User(db.Model):
     __tablename__ = "login"
@@ -24,6 +25,11 @@ class User(db.Model):
     @property
     def is_anonymous(self):
         return False
+
+    
+    @lm.user_loader
+    def load_user(user_id):
+        return User.get(user_id)
     
 
     def get_id(self):
