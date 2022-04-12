@@ -2,26 +2,28 @@ from app import app
 from flask import redirect, render_template, request, url_for
 from app.models.users import LoginForm, RegisterForm
 from app.models.tables import User, db
+from flask_login import login_user
 
 
 @app.route("/index")
 def index():
-    return render_template('main_page.html')
+    return render_template('index.html')
 
     
-@app.route('/')
-@app.route('/login', methods=['POST', 'GET'])
-def hello():
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
     Loginform = LoginForm()
-    msg = ''
-    login = ''
-    if request.method == 'GET':
+    mensagem = ''
+    if request.method == 'POST':
         login = User.query.filter_by(username=Loginform.username.data).first()
-        if login and login.password == Loginform.data.password:
-            return redirect(url_for("index"))
+        if login and login.password == Loginform.password.data:
+            login_user(login)
+            mensagem = 'Logged in'
+            return redirect(url_for('index'))
         else:
-            msg = 'Usuário/Senha Incorretos. Tente novamente'
-    return render_template('login_page.html', Loginform = Loginform, msg = msg)
+            mensagem = 'Usuário/Senha Incorretos. Tente novamente'
+    return render_template('login_page.html', 
+                            Loginform = Loginform, msg = mensagem)
 
 
 @app.route('/form/', methods=['POST', 'GET'])
@@ -31,7 +33,7 @@ def formulario():
     login = ''    
     if request.method == 'POST':
         login = User.query.filter_by(username=Registerform.username.data).first()
-        if login:
+        if login: 
             mensagem = 'Esse usuário já existe, tente novamente'
         else:
             new_user = User(f'{Registerform.username.data}', f'{Registerform.password.data}', f'{Registerform.email.data}', f'{Registerform.date.data}')        
